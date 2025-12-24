@@ -1,5 +1,48 @@
-#Final Project
-#Data Structure
+# Final Project Data Structure
+
+import pandas as pd
+
+df = pd.read_csv("Collisions_Crashes.csv")
+df["CRASH DATE"] = pd.to_datetime(df["CRASH DATE"], format="%m/%d/%Y", errors="coerce")
+filtered = df[df["CRASH DATE"].dt.year == 2024].copy()
+filtered["MONTH"] = filtered["CRASH DATE"].dt.month
+
+
+total_injured = filtered["NUMBER OF PERSONS INJURED"].sum()
+total_killed = filtered["NUMBER OF PERSONS KILLED"].sum()
+
+greatest_street = filtered["ON STREET NAME"].value_counts().idxmax()
+greatest_street_count = filtered["ON STREET NAME"].value_counts().max()
+
+greatest_month = filtered["MONTH"].value_counts().idxmax()
+greatest_month_count = filtered["MONTH"].value_counts().max()
+
+greatest_vehicle = filtered["VEHICLE TYPE CODE 1"].value_counts().idxmax()
+greatest_vehicle_count = filtered["VEHICLE TYPE CODE 1"].value_counts().max() 
+
+
+top5_streets = filtered["ON STREET NAME"].value_counts().head(5) 
+
+top5_vehicles = filtered["VEHICLE TYPE CODE 1"].value_counts().head(5)
+
+top5_months = filtered["MONTH"].value_counts().sort_index().head(5)
+
+print("Collision Crashes Analysis 2024")
+print("Total Injured: " + str(total_injured))
+print("Total Killed: " + str(total_killed))
+print("The Greatest Street: " + (greatest_street) + " Total Count: " + str(greatest_street_count))
+print("The Greatest Month: " + str(greatest_month) + " Total Count: " + str(greatest_month_count))
+print("The Greatest Vehicle: " + (greatest_vehicle) + " Total Count: " + str(greatest_vehicle_count))
+print("\nTop 5 Streets:")
+print(top5_streets)
+print("\nTop 5 Vehicles:")
+print(top5_vehicles)
+print("\nTop 5 Months:")
+print(top5_months)
+
+#---------------------------------------------------------
+#---------------------------------------------------------
+#---------------------------------------------------------
 
 import pandas as pd
 from sys import exit
